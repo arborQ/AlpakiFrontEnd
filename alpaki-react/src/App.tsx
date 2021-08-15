@@ -1,5 +1,4 @@
 import './App.css';
-import { Cart } from '@/alpaki-ui';
 import {
   BrowserRouter as Router,
   Switch,
