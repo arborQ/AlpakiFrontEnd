@@ -16,8 +16,16 @@ Primary.args = {
     children: "test primary"
 };
 
+export const Processing = Template.bind({});
+Processing.args = {
+    children: "click for processing",
+    onClick: () => new Promise(resolve => {
+        setTimeout(() => resolve(1), 1000);
+    })
+};
+
 export const Disabled = Template.bind({});
-Primary.args = {
-    children: "test primary",
+Disabled.args = {
+    children: "I'm disabled",
     disabled: true
 };
