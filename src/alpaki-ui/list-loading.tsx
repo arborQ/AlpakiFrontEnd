@@ -1,4 +1,4 @@
-import { Cart } from "./cart";
+import { Card } from "./card";
 
 export interface ListLoadingProps {
     size?: number;
@@ -9,7 +9,7 @@ export function ListLoading({ size = 4 }: ListLoadingProps) {
     for (let i = 0; i < size; i++) {
         items.push((
             <div className="w-full mx-auto mb-4" key={i}>
-                <Cart>
+                <Card>
                     <div className="animate-pulse flex space-x-4">
                         <div className="rounded-full bg-blue-400 h-12 w-12"></div>
                         <div className="flex-1 space-y-4 py-1">
@@ -20,7 +20,7 @@ export function ListLoading({ size = 4 }: ListLoadingProps) {
                             </div>
                         </div>
                     </div>
-                </Cart>
+                </Card>
             </div>
         ));
     }

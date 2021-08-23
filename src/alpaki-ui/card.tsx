@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 
-export function Cart(props: PropsWithChildren<{}>) {
+export function Card(props: PropsWithChildren<{}>) {
     const { children } = props;
 
     return (

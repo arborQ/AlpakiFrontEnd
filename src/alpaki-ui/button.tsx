@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { useCallback } from "react";
-import { PropsWithChildren } from "react";
+import { useState, useCallback, PropsWithChildren } from "react";
 import { Spinner } from './spinner';
 import { classNames } from '../utils/classNames';
 
@@ -8,7 +6,7 @@ export function Button(props: PropsWithChildren<{} & React.ButtonHTMLAttributes<
     const [isProcessing, changeIsProcessing] = useState(false);
     const { onClick, disabled, children, ...otherProps } = props;
 
-    const isDisabled = disabled || isProcessing || !onClick;
+    const isDisabled = disabled || isProcessing;
 
     var onClickCallback = useCallback(async (event: any) => {
         if (onClick) {

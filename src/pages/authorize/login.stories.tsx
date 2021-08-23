@@ -1,22 +1,21 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Cart } from './cart';
+import { LoginForm } from './login';
 
 export default {
-    title: 'AlpakiUI/Cart',
-    component: Cart,
+    title: 'Pages/Login',
+    component: LoginForm,
     argTypes: {
         backgroundColor: { control: 'color' },
     },
-} as ComponentMeta<typeof Cart>;
+} as ComponentMeta<typeof LoginForm>;
 
-const Template: ComponentStory<typeof Cart> = (args) => {
+const Template: ComponentStory<typeof LoginForm> = (args) => {
 
     return <div>
-        <Cart {...args} />
+        <LoginForm {...args} />
     </div>
 };
 
 export const Primary = Template.bind({});
 Primary.args = {
-    children: "test primary"
 };
