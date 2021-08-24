@@ -8,6 +8,7 @@ import { ProductDetails } from '@/pages/product-details';
 import { SearchResults } from '@/pages/search-results';
 import { LoginPage } from './pages/authorize/login';
 import { RegisterPage } from './pages/authorize/register';
+import { NotFound } from './pages/NotFound';
 import { NavigationBar } from './NavigationBar';
 import { LoginIcon, UserCircleIcon } from '@heroicons/react/solid'
 
@@ -51,6 +52,9 @@ function App() {
         <Route path="/authorize/register">
           <RegisterPage />
         </Route>
+        <Route path="*">
+            <NotFound />
+          </Route>
       </Switch>
     </Router>
   );
