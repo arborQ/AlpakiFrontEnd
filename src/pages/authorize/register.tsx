@@ -1,5 +1,5 @@
 import { Card, Input, Button } from 'alpaki-ui';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import Icon from 'images/lama.svg';
 import * as Yup from 'yup';
@@ -13,7 +13,9 @@ const AuthorizeValidationSchema = Yup.object().shape({
         .required('Required'),
 });
 
-export function RegisterForm({}) {
+export interface RegisterFormProps {}
+
+export function RegisterForm(_: RegisterFormProps) {
     return (
         <div className="flex place-content-center">
             <div className="sm:w-3/5 md:w-2/5 w-4/5 max-w-sm">
