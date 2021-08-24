@@ -2,11 +2,16 @@ import { useState, useCallback, PropsWithChildren } from "react";
 import { Spinner } from './spinner';
 import { classNames } from '../utils/classNames';
 
-export function Button(props: PropsWithChildren<{} & React.ButtonHTMLAttributes<HTMLButtonElement>>) {
+export interface ButtonProps {
+    isProcessing?: boolean;
+}
+
+export function Button(props: PropsWithChildren<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>>) {
+    const { isProcessing: externalProcessing } = props;
     const [isProcessing, changeIsProcessing] = useState(false);
     const { onClick, disabled, children, ...otherProps } = props;
 
-    const isDisabled = disabled || isProcessing;
+    const isDisabled = disabled || isProcessing || !!externalProcessing;
 
     var onClickCallback = useCallback(async (event: any) => {
         if (onClick) {
@@ -23,12 +28,11 @@ export function Button(props: PropsWithChildren<{} & React.ButtonHTMLAttributes<
     return (
         <button
             className={className}
-            tabIndex={1}
             onClick={onClickCallback}
             disabled={isDisabled}
             {...otherProps}>
             {
-                isProcessing && (
+                (isProcessing || !!externalProcessing) && (
                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                         <Spinner color={'primary'} size={6} />
                     </span>

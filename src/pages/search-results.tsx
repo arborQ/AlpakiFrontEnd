@@ -1,4 +1,4 @@
-import { Cart, ListLoading } from "@/alpaki-ui";
+import { Card, ListLoading } from "alpaki-ui";
 import { useEffect, useState } from "react";
 import { searchProducts, ProductResultItem } from '@/services/search-service';
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ export function SearchResults() {
     const search = query.get('search');
 
     useEffect(() => {
-        searchProducts(search ?? '').then(updateProducts);
+        searchProducts(search ?? '').then(updateProducts); 
     }, [search]);
     const [products, updateProducts] = useState<ProductResultItem[]>([]);
 
@@ -19,9 +19,9 @@ export function SearchResults() {
             <div className="md:w-4/5 w-full">
                 <div className="flex flex-col-reverse md:flex-row">
                     <div className="md:w-1/4 w-full">
-                        <Cart>
+                        <Card>
                             search summary
-                        </Cart>
+                        </Card>
                     </div>
                     <div className="md:w-3/4 w-full ml-6">
                         {
@@ -29,12 +29,12 @@ export function SearchResults() {
                             ? <ListLoading size={5} />
                             : products.map(p => (
                                 <div key={p.id} className="mb-4">
-                                    <Cart>
+                                    <Card>
                                         <div className="flex">
                                             <img src={p.image} className="w-32 h-32" alt={p.title} />
                                             <Link to={`/product/${p.id}`}>{p.title}</Link>
                                         </div>
-                                    </Cart>
+                                    </Card>
                                 </div>
                             ))
                         }

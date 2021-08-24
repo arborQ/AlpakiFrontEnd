@@ -1,5 +1,5 @@
 import { getProduct, ProductItem } from '@/services/product-service';
-import { Cart } from 'alpaki-ui'
+import { Card } from 'alpaki-ui'
 import { PriceDisplay } from 'domain/price-display';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ export function ProductDetails() {
     return (
         <div className="flex place-content-center">
             <div className="md:w-4/5 w-full">
-                <Cart>
+                <Card>
                     <div className="flex flex-col-reverse md:flex-row">
                         <div className="md:w-3/4 w-full flex">
                             <div className="w-48 h-48 border rounded-md bg-no-repeat bg-cover" style={{ backgroundImage: `url(${product?.image})` }}></div>
@@ -25,7 +25,7 @@ export function ProductDetails() {
                             </div>
                         </div>
                     </div>
-                </Cart>
+                </Card>
             </div>
         </div>
     );
