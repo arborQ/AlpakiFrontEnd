@@ -2,22 +2,42 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import { ProductDetails } from '@/pages/product-details';
 import { SearchResults } from '@/pages/search-results';
 import { LoginPage } from './pages/authorize/login';
 import { RegisterPage } from './pages/authorize/register';
+import { NavigationBar } from './NavigationBar';
+import { LoginIcon, UserCircleIcon } from '@heroicons/react/solid'
+
+type MenuItemCanView = (props: { isAuthorized: boolean }) => boolean;
+type MenuItem = { name: string, to: string, show: MenuItemCanView };
+type MenuIconItem = { name: string, to: string, icon: any, show: MenuItemCanView };
+
+const ifAuthorized: MenuItemCanView = ({ isAuthorized }) => isAuthorized;
+const ifAnonymous: MenuItemCanView = ({ isAuthorized }) => !isAuthorized;
+
+const menuItems: MenuItem[] = [
+  { name: 'Products', to: '/search', show: ifAuthorized },
+  { name: 'Profile', to: '/authorize/profile', show: ifAuthorized },
+  { name: 'Login', to: '/authorize/login', show: ifAnonymous },
+  { name: 'Register', to: '/authorize/register', show: ifAnonymous },
+];
+
+const menuIconItems: MenuIconItem[] = [
+  { name: 'Login', to: '/authorize/login', icon: LoginIcon, show: ifAnonymous },
+  { name: 'Profile', to: '/authorize/profile', icon: UserCircleIcon, show: ifAuthorized }
+];
 
 function App() {
+  const menuItemData = { isAuthorized: false };
+  const items = menuItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to }));
+  const iconItems = menuIconItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to, icon: item.icon }));
+  
   return (
     <Router>
-      <div>
-        <Link to="/product/1234">Office 365</Link>
-        <Link to="/search?search=office+365">Search = Office 365</Link>
-        <Link to="/authorize/login">Login</Link>
-      </div>
+      <NavigationBar items={items} icons={iconItems}></NavigationBar>
       <Switch>
         <Route path="/product/:id">
           <ProductDetails />

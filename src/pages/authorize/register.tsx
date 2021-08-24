@@ -13,7 +13,7 @@ const AuthorizeValidationSchema = Yup.object().shape({
         .required('Required'),
 });
 
-export function RegisterForm() {
+export function RegisterForm({}) {
     return (
         <div className="flex place-content-center">
             <div className="sm:w-3/5 md:w-2/5 w-4/5 max-w-sm">
