@@ -11,6 +11,7 @@ import { RegisterPage } from './pages/authorize/register';
 import { NotFound } from './pages/NotFound';
 import { NavigationBar } from './NavigationBar';
 import { LoginIcon, UserCircleIcon } from '@heroicons/react/solid'
+import { useUserContext } from './context/user-context';
 
 type MenuItemCanView = (props: { isAuthorized: boolean }) => boolean;
 type MenuItem = { name: string, to: string, show: MenuItemCanView };
@@ -32,7 +33,8 @@ const menuIconItems: MenuIconItem[] = [
 ];
 
 function App() {
-  const menuItemData = { isAuthorized: false };
+  const user = useUserContext();
+  const menuItemData = { isAuthorized: !!user.userId };
   const items = menuItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to }));
   const iconItems = menuIconItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to, icon: item.icon }));
   

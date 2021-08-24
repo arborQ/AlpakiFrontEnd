@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import Icon from 'images/lama.svg';
 import * as Yup from 'yup';
+import { useUserContext } from '@/context/user-context';
 
 interface LoginFormProps {
     login: string;
@@ -54,15 +55,15 @@ export function LoginForm({ login, password, onSubmit }: LoginFormProps) {
 
 export function LoginPage() {
     const params = useParams<{ login: string }>();
-
+    const userContext = useUserContext();
+    
     return (
         <LoginForm
             login={params.login}
             password={''}
             onSubmit={async (login, password) => {
                 const token = await validateUser(login, password);
-                if (!token) {
-                }
+                userContext.setAuthorizeToken(token);
             }}
         />
     );
