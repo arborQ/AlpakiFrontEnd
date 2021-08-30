@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: node-app
-        path: .
+        path: ./build
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,4 +52,4 @@ jobs:
         app-name: 'alpaki'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ea74e5fc084644649c42a2fa2b68b127 }}
-        package: ./build
+        package: .
