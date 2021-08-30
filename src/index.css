@@ -9,13 +9,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: url("../src/images/pexels-fauxels-3183198.jpg");
+  background-image: url("../src/images/pexels-francesco-ungaro-673648.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
   overflow: hidden;
   overflow-y: auto;
+  background-attachment: fixed;
 }
 
 code {

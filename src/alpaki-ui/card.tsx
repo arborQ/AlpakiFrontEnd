@@ -8,7 +8,7 @@ export function Card(props: PropsWithChildren<{}>) {
             <div className="z-20 relative">
                 {children}
             </div>
-            <div className="z-10 absolute top-0 left-0 w-full h-full bg-light dark:bg-dark filter blur-lg bg-opacity-75 saturate-150"></div>
+            <div className="z-10 absolute top-0 left-0 w-full h-full bg-light dark:bg-dark bg-opacity-90"></div>
         </div>
     );
 }
