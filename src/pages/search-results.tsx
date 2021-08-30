@@ -9,22 +9,21 @@ export function SearchResults() {
     const search = query.get('search');
 
     useEffect(() => {
-        searchProducts(search ?? '').then(updateProducts); 
+        searchProducts(search ?? '').then(updateProducts);
     }, [search]);
     const [products, updateProducts] = useState<ProductResultItem[]>([]);
 
     return (
-        <div className="flex place-content-center">
-            <div className="w-4/5 max-w-lg">
-                <div className="flex flex-col-reverse md:flex-row">
-                    <div className="md:w-1/4 w-full">
-                        <Card>
-                            search summary
-                        </Card>
-                    </div>
-                    <div className="md:w-3/4 w-full ml-6">
-                        {
-                            products.length === 0 
+        <div className="flex place-content-center pt-4">
+            <div className="flex flex-col-reverse md:flex-row">
+                <div className="md:w-1/4 w-full">
+                    <Card>
+                        search summary
+                    </Card>
+                </div>
+                <div className="md:w-3/4 w-full ml-6">
+                    {
+                        products.length === 0
                             ? <ListLoading size={5} />
                             : products.map(p => (
                                 <div key={p.id} className="mb-4">
@@ -36,8 +35,7 @@ export function SearchResults() {
                                     </Card>
                                 </div>
                             ))
-                        }
-                    </div>
+                    }
                 </div>
             </div>
         </div>
