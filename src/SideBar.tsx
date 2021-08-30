@@ -16,7 +16,7 @@ export function SideBar(props: SideBarProps) {
             <div className="flex flex-col w-32 h-screen sticky top-0 md:w-64 lex-shrink-0 bg-light bg-opacity-75 border-r shadow-lg hover:shadow-2xl  transition duration-150">
                 <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between ">
                     <Link to="/" className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
-                        <img src={Logo} className="w-20 h-20" />
+                        <img alt="Alpaki Logo" src={Logo} className="w-20 h-20" />
                     </Link>
                 </div>
                 <nav className="flex-grow md:block pr-4 pb-4 md:pb-0 md:overflow-y-auto">

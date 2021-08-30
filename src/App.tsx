@@ -33,7 +33,7 @@ const menuIconItems: MenuIconItem[] = [
 ];
 
 function App() {
-  const { userId, tryLogOut } = useUserContext();
+  const { userId } = useUserContext();
   const menuItemData = { isAuthorized: !!userId };
   const items = menuItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to }));
   const iconItems = menuIconItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to, icon: item.icon }));
