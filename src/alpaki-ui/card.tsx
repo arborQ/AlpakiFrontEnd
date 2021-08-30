@@ -4,8 +4,11 @@ export function Card(props: PropsWithChildren<{}>) {
     const { children } = props;
 
     return (
-        <div className="bg-white rounded-xl shadow-xl focus-within:shadow-2xl p-4 md:p-6 border transition duration-150 ease-in-out">
-            {children}
+        <div tabIndex={1} className="relative outline-none rounded-xl shadow-xl focus:shadow-2xl focus-within:shadow-2xl p-4 md:p-6 border transition duration-150 ease-in-out">
+            <div className="z-20 relative">
+                {children}
+            </div>
+            <div className="z-10 absolute top-0 left-0 w-full h-full bg-light dark:bg-dark filter blur-lg bg-opacity-75 saturate-150"></div>
         </div>
     );
 }

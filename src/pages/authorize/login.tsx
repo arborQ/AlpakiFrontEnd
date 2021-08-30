@@ -1,15 +1,17 @@
 import { validateUser } from 'services/authorize-service';
 import { Card, Input, Button } from 'alpaki-ui';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import Icon from 'images/lama.svg';
 import * as Yup from 'yup';
 import { useUserContext } from '@/context/user-context';
+import { ExternalLinkIcon } from '@heroicons/react/solid'
 
 interface LoginFormProps {
     login: string;
     password: string;
     onSubmit: (login: string, password: string) => Promise<void>
+    externalLogin: () => Promise<void>
 }
 
 const AuthorizeValidationSchema = Yup.object().shape({
@@ -21,7 +23,7 @@ const AuthorizeValidationSchema = Yup.object().shape({
         .required('Required'),
 });
 
-export function LoginForm({ login, password, onSubmit }: LoginFormProps) {
+export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFormProps) {
     return (
         <div className="flex place-content-center">
             <div className="sm:w-3/5 md:w-2/5 w-4/5 max-w-sm">
@@ -33,6 +35,11 @@ export function LoginForm({ login, password, onSubmit }: LoginFormProps) {
                         ({ values, handleChange, isSubmitting }) => (
                             <Form>
                                 <Card>
+                                    <div className=" relative">
+                                        <button title="Auth0 Login" className="absolute right-0" type="button" onClick={async () => await externalLogin()}>
+                                            <ExternalLinkIcon className="w-5 h-5 text-alternative" />
+                                        </button>
+                                    </div>
                                     <div className="flex place-content-center pb-4">
                                         <img src={Icon} alt="Alpaki Logo" className="w-2/5" />
                                     </div>
@@ -56,7 +63,8 @@ export function LoginForm({ login, password, onSubmit }: LoginFormProps) {
 export function LoginPage() {
     const params = useParams<{ login: string }>();
     const userContext = useUserContext();
-    
+    const history = useHistory();
+
     return (
         <LoginForm
             login={params.login}
@@ -64,6 +72,13 @@ export function LoginPage() {
             onSubmit={async (login, password) => {
                 const token = await validateUser(login, password);
                 userContext.setAuthorizeToken(token);
+                if (!!token) {
+                    history.push('/search');
+                }
+            }}
+            externalLogin={async () => {
+                await userContext.tryLogging();
+                history.push('/search');
             }}
         />
     );

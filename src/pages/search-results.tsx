@@ -15,8 +15,7 @@ export function SearchResults() {
 
     return (
         <div className="flex place-content-center">
-
-            <div className="md:w-4/5 w-full">
+            <div className="w-4/5 max-w-lg">
                 <div className="flex flex-col-reverse md:flex-row">
                     <div className="md:w-1/4 w-full">
                         <Card>
@@ -31,7 +30,7 @@ export function SearchResults() {
                                 <div key={p.id} className="mb-4">
                                     <Card>
                                         <div className="flex">
-                                            <img src={p.image} className="w-32 h-32" alt={p.title} />
+                                            <img loading="lazy" src={p.image} className="w-32 h-32" alt={p.title} />
                                             <Link to={`/product/${p.id}`}>{p.title}</Link>
                                         </div>
                                     </Card>

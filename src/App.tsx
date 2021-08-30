@@ -9,7 +9,7 @@ import { SearchResults } from '@/pages/search-results';
 import { LoginPage } from './pages/authorize/login';
 import { RegisterPage } from './pages/authorize/register';
 import { NotFound } from './pages/NotFound';
-import { NavigationBar } from './NavigationBar';
+import { SideBar } from './SideBar';
 import { LoginIcon, UserCircleIcon } from '@heroicons/react/solid'
 import { useUserContext } from './context/user-context';
 
@@ -33,31 +33,32 @@ const menuIconItems: MenuIconItem[] = [
 ];
 
 function App() {
-  const user = useUserContext();
-  const menuItemData = { isAuthorized: !!user.userId };
+  const { userId, tryLogOut } = useUserContext();
+  const menuItemData = { isAuthorized: !!userId };
   const items = menuItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to }));
   const iconItems = menuIconItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to, icon: item.icon }));
-  
+
   return (
     <Router>
-      <NavigationBar items={items} icons={iconItems}></NavigationBar>
-      <Switch>
-        <Route path="/product/:id">
-          <ProductDetails />
-        </Route>
-        <Route path="/search">
-          <SearchResults />
-        </Route>
-        <Route path="/authorize/login">
-          <LoginPage />
-        </Route>
-        <Route path="/authorize/register">
-          <RegisterPage />
-        </Route>
-        <Route path="*">
+      <SideBar items={items} icons={iconItems}>
+        <Switch>
+          <Route path="/product/:id">
+            <ProductDetails />
+          </Route>
+          <Route path="/search">
+            <SearchResults />
+          </Route>
+          <Route path="/authorize/login">
+            <LoginPage />
+          </Route>
+          <Route path="/authorize/register">
+            <RegisterPage />
+          </Route>
+          <Route path="*">
             <NotFound />
           </Route>
-      </Switch>
+        </Switch>
+      </SideBar>
     </Router>
   );
 }
