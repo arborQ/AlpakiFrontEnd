@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import Logo from '../src/images/lama.svg';
+import { Button } from "alpaki-ui";
+import { UserCircleIcon } from '@heroicons/react/solid'
 
 export interface SideBarProps {
     items: Array<{ name: string, to: string }>;
@@ -10,7 +12,7 @@ export interface SideBarProps {
 
 
 export function SideBar(props: SideBarProps) {
-    const { items, children } = props;
+    const { items, children, onLogout } = props;
     return (
         <div className="w-full flex">
             <div className="flex flex-col w-32 h-screen sticky top-0 md:w-64 lex-shrink-0 bg-light bg-opacity-75 border-r shadow-lg hover:shadow-2xl  transition duration-150">
@@ -19,7 +21,7 @@ export function SideBar(props: SideBarProps) {
                         <img alt="Alpaki Logo" src={Logo} className="w-20 h-20" />
                     </Link>
                 </div>
-                <nav className="flex-grow md:block pr-4 pb-4 md:pb-0 md:overflow-y-auto">
+                <nav className="flex-grow md:block pr-4 pb-4 md:pb-0 md:overflow-y-auto relative">
                     {
                         items.map(item => (
                             <NavLink activeClassName="bg-primary text-primary" key={item.to} to={item.to} className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-r-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
@@ -27,11 +29,22 @@ export function SideBar(props: SideBarProps) {
                             </NavLink >
                         ))
                     }
+                    {
+                        !onLogout ? null : (
+                            <Button onClick={async () => await onLogout()} className="absolute bottom-0 w-full mb-4">
+                                <span className="flex flex-col">
+                                    <span>Logout</span>
+                                    <UserCircleIcon className="w-5 h-5" />
+                                </span>
+                            </Button>
+                        )
+                    }
                 </nav>
             </div>
             <div className="w-full">
                 {children}
             </div>
+
         </div>
     );
 }

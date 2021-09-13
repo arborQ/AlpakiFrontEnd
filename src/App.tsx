@@ -5,13 +5,10 @@ import {
   Route
 } from "react-router-dom";
 import { ProductDetails } from '@/pages/product-details';
-import { SearchResults } from '@/pages/search-results';
-import { LoginPage } from './pages/authorize/login';
-import { RegisterPage } from './pages/authorize/register';
-import { NotFound } from './pages/NotFound';
 import { SideBar } from './SideBar';
 import { LoginIcon, UserCircleIcon } from '@heroicons/react/solid'
 import { useUserContext } from './context/user-context';
+import { Suspense, lazy } from 'react';
 
 type MenuItemCanView = (props: { isAuthorized: boolean }) => boolean;
 type MenuItem = { name: string, to: string, show: MenuItemCanView };
@@ -32,32 +29,31 @@ const menuIconItems: MenuIconItem[] = [
   { name: 'Profile', to: '/authorize/profile', icon: UserCircleIcon, show: ifAuthorized }
 ];
 
+const RegisterLazyComponent = lazy(() => import('@/pages/authorize/register'))
+const LoginPageLazyComponent = lazy(() => import('@/pages/authorize/login'))
+const SearchResultsLazyComponent = lazy(() => import('@/pages/search-results'))
+const NotFoundLazyComponent = lazy(() => import('@/pages/notFound'))
+
 function App() {
-  const { userId } = useUserContext();
+  const { userId, tryLogOut } = useUserContext();
   const menuItemData = { isAuthorized: !!userId };
   const items = menuItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to }));
   const iconItems = menuIconItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to, icon: item.icon }));
 
   return (
     <Router>
-      <SideBar items={items} icons={iconItems}>
-        <Switch>
-          <Route path="/product/:id">
-            <ProductDetails />
-          </Route>
-          <Route path="/search">
-            <SearchResults />
-          </Route>
-          <Route path="/authorize/login">
-            <LoginPage />
-          </Route>
-          <Route path="/authorize/register">
-            <RegisterPage />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
+      <SideBar items={items} icons={iconItems} onLogout={async () => { }}>
+        <Suspense fallback={<div>Wczytywanie...</div>}>
+          <Switch>
+            <Route path="/product/:id">
+              <ProductDetails />
+            </Route>
+            <Route path="/search" component={SearchResultsLazyComponent} />
+            <Route path="/authorize/login" component={LoginPageLazyComponent} />
+            <Route path="/authorize/register" component={RegisterLazyComponent} />
+            <Route path="*" component={NotFoundLazyComponent} />
+          </Switch>
+        </Suspense>
       </SideBar>
     </Router>
   );

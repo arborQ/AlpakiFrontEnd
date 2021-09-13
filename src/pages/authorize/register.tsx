@@ -48,7 +48,7 @@ export function RegisterForm(_: RegisterFormProps) {
     );
 }
 
-export function RegisterPage(){
+export default function RegisterPage(){
     return (
         <RegisterForm />
     );

@@ -32,10 +32,10 @@ export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFor
                     await onSubmit(values.login, values.password);
                 }}>
                     {
-                        ({ values, handleChange, isSubmitting }) => (
+                        ({ values, errors, handleChange, isSubmitting }) => (
                             <Form>
                                 <Card>
-                                    <div className=" relative">
+                                    <div className="relative">
                                         <button title="Auth0 Login" className="absolute right-0" type="button" onClick={async () => await externalLogin()}>
                                             <ExternalLinkIcon className="w-5 h-5 text-alternative" />
                                         </button>
@@ -43,8 +43,8 @@ export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFor
                                     <div className="flex place-content-center pb-4">
                                         <img src={Icon} alt="Alpaki Logo" className="w-2/5" />
                                     </div>
-                                    <Input label={"Login"} autoComplete="off" value={values.login} onChange={handleChange('login')} />
-                                    <Input label={"Password"} type="password" value={values.password} onChange={handleChange('password')} />
+                                    <Input label={"Login"} autoComplete="off" value={values.login} error={errors.login} onChange={handleChange('login')} />
+                                    <Input label={"Password"} type="password" value={values.password} error={errors.password} onChange={handleChange('password')} />
                                     <Button type="submit" isProcessing={isSubmitting}>Login</Button>
                                     <div className="flex flex-col">
                                         <span className="text-center font-thin">or</span>
@@ -60,7 +60,7 @@ export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFor
     );
 }
 
-export function LoginPage() {
+export default function LoginPage() {
     const params = useParams<{ login: string }>();
     const userContext = useUserContext();
     const history = useHistory();

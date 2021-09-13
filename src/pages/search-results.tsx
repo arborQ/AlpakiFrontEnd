@@ -4,7 +4,7 @@ import { searchProducts, ProductResultItem } from '@/services/search-service';
 import { Link } from "react-router-dom";
 import { useQuery } from "@/hooks/useQuery";
 
-export function SearchResults() {
+export default function SearchResults() {
     let query = useQuery();
     const search = query.get('search');
 
@@ -16,12 +16,7 @@ export function SearchResults() {
     return (
         <div className="flex place-content-center pt-4">
             <div className="flex flex-col-reverse md:flex-row">
-                <div className="md:w-1/4 w-full">
-                    <Card>
-                        search summary
-                    </Card>
-                </div>
-                <div className="md:w-3/4 w-full ml-6">
+                <div className="w-full lx:mx-6 md:mx-2 mx-1">
                     {
                         products.length === 0
                             ? <ListLoading size={5} />
@@ -29,7 +24,7 @@ export function SearchResults() {
                                 <div key={p.id} className="mb-4">
                                     <Card>
                                         <div className="flex">
-                                            <img loading="lazy" src={p.image} className="w-32 h-32" alt={p.title} />
+                                            <img loading="lazy" src={p.image} className="w-32 h-32 rounded-md border shadow-sm mr-4" alt={p.title} />
                                             <Link to={`/product/${p.id}`}>{p.title}</Link>
                                         </div>
                                     </Card>

@@ -1,6 +1,6 @@
 import { Card } from 'alpaki-ui';
 
-export function NotFound() {
+export default function NotFound() {
     return (
         <div className="flex place-content-center">
             <div className="sm:w-3/5 md:w-2/5 w-4/5 max-w-sm">
