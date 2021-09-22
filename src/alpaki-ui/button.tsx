@@ -7,9 +7,9 @@ export interface ButtonProps {
 }
 
 export function Button(props: PropsWithChildren<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>>) {
-    const { isProcessing: externalProcessing } = props;
     const [isProcessing, changeIsProcessing] = useState(false);
-    const { onClick, disabled, children, ...otherProps } = props;
+
+    const { onClick, disabled, children, isProcessing: externalProcessing, ...otherProps } = props;
 
     const isDisabled = disabled || isProcessing || !!externalProcessing;
 

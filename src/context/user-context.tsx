@@ -39,10 +39,8 @@ export function UserContextProvider({ children }: PropsWithChildren<{}>) {
     const [user, updateUser] = useState<User>(userData);
     const { loginWithPopup, isAuthenticated, isLoading, user: authUser, getIdTokenClaims, logout } = useAuth0();
 
-    console.log({ authUser })
     useEffect(() => {
         getIdTokenClaims().then(token => {
-            console.log({token});
         });
     }, [getIdTokenClaims]);
     if (isLoading) {

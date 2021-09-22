@@ -1,20 +1,24 @@
-import { Card, ListLoading } from "alpaki-ui";
+import { Card, DebounceInput, ListLoading } from "alpaki-ui";
 import { useEffect, useState } from "react";
 import { searchProducts, ProductResultItem } from '@/services/search-service';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useQuery } from "@/hooks/useQuery";
 
 export default function SearchResults() {
     let query = useQuery();
+    const history = useHistory();
     const search = query.get('search');
+    const [products, updateProducts] = useState<ProductResultItem[]>([]);
 
     useEffect(() => {
         searchProducts(search ?? '').then(updateProducts);
     }, [search]);
-    const [products, updateProducts] = useState<ProductResultItem[]>([]);
 
     return (
         <div className="flex place-content-center pt-4">
+            <DebounceInput label={'Search'} value={search ?? ''} debounce={500} onDebounceChange={value => {
+                history.replace(`/search?search=${value}`)
+            }} />
             <div className="flex flex-col-reverse md:flex-row">
                 <div className="w-full lx:mx-6 md:mx-2 mx-1">
                     {

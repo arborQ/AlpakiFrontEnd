@@ -1,11 +1,12 @@
 import { validateUser } from 'services/authorize-service';
 import { Card, Input, Button } from 'alpaki-ui';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import Icon from 'images/lama.svg';
 import * as Yup from 'yup';
 import { useUserContext } from '@/context/user-context';
 import { ExternalLinkIcon } from '@heroicons/react/solid'
+import { useQuery } from '@/hooks/useQuery';
 
 interface LoginFormProps {
     login: string;
@@ -27,10 +28,12 @@ export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFor
     return (
         <div className="flex place-content-center">
             <div className="sm:w-3/5 md:w-2/5 w-4/5 max-w-sm">
-
-                <Formik validationSchema={AuthorizeValidationSchema} initialValues={{ login, password }} onSubmit={async (values) => {
-                    await onSubmit(values.login, values.password);
-                }}>
+                <Formik
+                    validationSchema={AuthorizeValidationSchema}
+                    initialValues={{ login, password }}
+                    onSubmit={async (values) => {
+                        await onSubmit(values.login, values.password);
+                    }}>
                     {
                         ({ values, errors, handleChange, isSubmitting }) => (
                             <Form>
@@ -43,8 +46,8 @@ export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFor
                                     <div className="flex place-content-center pb-4">
                                         <img src={Icon} alt="Alpaki Logo" className="w-2/5" />
                                     </div>
-                                    <Input label={"Login"} autoComplete="off" value={values.login} error={errors.login} onChange={handleChange('login')} />
-                                    <Input label={"Password"} type="password" value={values.password} error={errors.password} onChange={handleChange('password')} />
+                                    <Input label={"Login"} autoComplete="on" value={values.login} error={errors.login} onChange={handleChange('login')} />
+                                    <Input label={"Password"} type="password" autoComplete="on" value={values.password} error={errors.password} onChange={handleChange('password')} />
                                     <Button type="submit" isProcessing={isSubmitting}>Login</Button>
                                     <div className="flex flex-col">
                                         <span className="text-center font-thin">or</span>
@@ -61,13 +64,15 @@ export function LoginForm({ login, password, onSubmit, externalLogin }: LoginFor
 }
 
 export default function LoginPage() {
-    const params = useParams<{ login: string }>();
+    const queryParams = useQuery();
     const userContext = useUserContext();
     const history = useHistory();
 
+    const login = queryParams.get('login');
+    
     return (
         <LoginForm
-            login={params.login}
+            login={login ?? ''}
             password={''}
             onSubmit={async (login, password) => {
                 const token = await validateUser(login, password);

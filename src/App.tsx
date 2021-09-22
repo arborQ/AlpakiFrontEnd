@@ -18,7 +18,7 @@ const ifAuthorized: MenuItemCanView = ({ isAuthorized }) => isAuthorized;
 const ifAnonymous: MenuItemCanView = ({ isAuthorized }) => !isAuthorized;
 
 const menuItems: MenuItem[] = [
-  { name: 'Products', to: '/search', show: ifAuthorized },
+  { name: 'Products', to: '/search', show: () => true },
   { name: 'Profile', to: '/authorize/profile', show: ifAuthorized },
   { name: 'Login', to: '/authorize/login', show: ifAnonymous },
   { name: 'Register', to: '/authorize/register', show: ifAnonymous },
@@ -35,7 +35,7 @@ const SearchResultsLazyComponent = lazy(() => import('@/pages/search-results'))
 const NotFoundLazyComponent = lazy(() => import('@/pages/notFound'))
 
 function App() {
-  const { userId, tryLogOut } = useUserContext();
+  const { userId } = useUserContext();
   const menuItemData = { isAuthorized: !!userId };
   const items = menuItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to }));
   const iconItems = menuIconItems.filter(item => item.show(menuItemData)).map(item => ({ name: item.name, to: item.to, icon: item.icon }));
