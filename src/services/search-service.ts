@@ -21,5 +21,10 @@ export async function  searchProducts(search: string) : Promise<ProductResultIte
     const response = await fetch('https://fakestoreapi.com/products');
     const responseJson = await response.json();
     
-    return responseJson as ProductResultItem[];
+    const products = responseJson as ProductResultItem[];
+
+    const filtered =  products.filter(p => !search || `${p.title} ${p.description}`.indexOf(search) !== -1);
+
+    console.log({ all: products.length, filtered: filtered.length, search })
+    return filtered;
 }
